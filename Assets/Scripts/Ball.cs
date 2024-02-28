@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -8,6 +9,7 @@ public class Ball : MonoBehaviour
     [SerializeField] private float _initialSpeed = 10f;
     [SerializeField] private float _maxSpeed = 14f;
     [SerializeField] private float _speedIncrease = 0.25f;
+    [SerializeField] private float _startDelay = 2f;
     [SerializeField] private string _paletteTag;
     [SerializeField] private string _aScoreTag;
     [SerializeField] private string _bScoreTag;
@@ -47,10 +49,16 @@ public class Ball : MonoBehaviour
 
     public void ResetBall()
     {
+        StartCoroutine(StartBallAfterDelay(_startDelay));
+    }
+
+    private IEnumerator StartBallAfterDelay(float delay)
+    {
         _rb.velocity = Vector2.zero;
         transform.position = Vector2.zero;
-        StartBall();
         hitCounter = 0;
+        yield return new WaitForSeconds(delay);
+        StartBall();
     }
 
     private void BounceBall(Transform player)
