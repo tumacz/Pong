@@ -1,0 +1,54 @@
+{
+    "name": "PongControls",
+    "maps": [
+        {
+            "name": "PongMap",
+            "id": "55df209a-b9c4-4da7-b3a5-f766cc0f3102",
+            "actions": [
+                {
+                    "name": "moveUp",
+                    "type": "Value",
+                    "id": "f9d32847-fa1d-45a6-b9b2-accabaac8e98",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "moveDown",
+                    "type": "Value",
+                    "id": "eda2bcc1-f0be-4623-8b3a-8ff8d7bce394",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "957862c4-de06-4646-aec0-170c9dcaa3dd",
+                    "path": "<Keyboard>/a",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "moveUp",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "22d01162-faa1-4d99-8720-f2d6b5b99995",
+                    "path": "<Keyboard>/d",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "moveDown",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
