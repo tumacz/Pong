@@ -1350,6 +1350,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1318946258}
   - component: {fileID: 1318946259}
+  - component: {fileID: 1318946260}
   m_Layer: 0
   m_Name: GameBoard
   m_TagString: Untagged
@@ -1393,6 +1394,22 @@ MonoBehaviour:
   _bScoreTag: ScoreB
   _aScoreText: {fileID: 984994711}
   _bScoreText: {fileID: 223896249}
+--- !u!114 &1318946260
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1318946257}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bea8fa277c3dc5147a3688df02c98035, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player1Palette: {fileID: 1588353521}
+  player2Palette: {fileID: 1949659515}
+  player1Mode: 0
+  player2Mode: 0
 --- !u!1 &1395439285
 GameObject:
   m_ObjectHideFlags: 0
@@ -1557,12 +1574,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _ball: {fileID: 1063540451}
+  _playerNumber: 1
   _aiController: {fileID: 1588353525}
   _inputController: {fileID: 1588353526}
   movementSpeed: 4
   minY: -4
   maxY: 5
-  _playerMode: 0
   _AIThreshold: 0.5
 --- !u!61 &1588353522
 BoxCollider2D:
@@ -1700,6 +1717,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b96c14b026d16e478f4655a0786220b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _player1:
+    m_Name: Player 1
+    m_Id: 13146ee0-510f-4f2b-8f35-d824c19b3046
+    m_Asset: {fileID: 0}
+    m_Actions: []
+    m_Bindings: []
+  _player2:
+    m_Name: Player 2
+    m_Id: dd835f78-0932-470c-aa3e-b43e07be8007
+    m_Asset: {fileID: 0}
+    m_Actions: []
+    m_Bindings: []
+  _currentPlayer:
+    m_Name: Current Player
+    m_Id: ded7888d-91cf-4dcd-8326-eb8fe2d95c4d
+    m_Asset: {fileID: 0}
+    m_Actions: []
+    m_Bindings: []
 --- !u!1 &1949659511
 GameObject:
   m_ObjectHideFlags: 0
@@ -1846,12 +1881,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _ball: {fileID: 1063540451}
+  _playerNumber: 2
   _aiController: {fileID: 1949659516}
   _inputController: {fileID: 1949659517}
   movementSpeed: 4
   minY: -4
   maxY: 5
-  _playerMode: 1
   _AIThreshold: 0.5
 --- !u!114 &1949659516
 MonoBehaviour:
@@ -1877,6 +1912,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b96c14b026d16e478f4655a0786220b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _player1:
+    m_Name: Player 1
+    m_Id: d37dc8b2-b132-4943-87a6-aaff7598ce8d
+    m_Asset: {fileID: 0}
+    m_Actions: []
+    m_Bindings: []
+  _player2:
+    m_Name: Player 2
+    m_Id: 6b9cca15-30c6-4ed6-935d-9d13f3ff60a7
+    m_Asset: {fileID: 0}
+    m_Actions: []
+    m_Bindings: []
+  _currentPlayer:
+    m_Name: Current Player
+    m_Id: 7a5995b9-8f5d-4c40-98c6-de6e85054085
+    m_Asset: {fileID: 0}
+    m_Actions: []
+    m_Bindings: []
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

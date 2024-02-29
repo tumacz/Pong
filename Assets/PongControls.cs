@@ -25,12 +25,12 @@ public partial class @PongControls: IInputActionCollection2, IDisposable
     ""maps"": [
         {
             ""name"": ""PongMap"",
-            ""id"": ""55df209a-b9c4-4da7-b3a5-f766cc0f3102"",
+            ""id"": ""c4a786d9-da13-4c4c-ada5-ea4db1c03625"",
             ""actions"": [
                 {
                     ""name"": ""moveUp"",
                     ""type"": ""Value"",
-                    ""id"": ""f9d32847-fa1d-45a6-b9b2-accabaac8e98"",
+                    ""id"": ""63d260e1-a775-4ff7-b89b-a32de32ac3a7"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -39,7 +39,7 @@ public partial class @PongControls: IInputActionCollection2, IDisposable
                 {
                     ""name"": ""moveDown"",
                     ""type"": ""Value"",
-                    ""id"": ""eda2bcc1-f0be-4623-8b3a-8ff8d7bce394"",
+                    ""id"": ""12feb2db-ed96-43f9-9f5f-96de56c6e77d"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -49,7 +49,7 @@ public partial class @PongControls: IInputActionCollection2, IDisposable
             ""bindings"": [
                 {
                     ""name"": """",
-                    ""id"": ""957862c4-de06-4646-aec0-170c9dcaa3dd"",
+                    ""id"": ""6466a1f5-2dbe-40e4-abcb-29fafafb98f5"",
                     ""path"": ""<Keyboard>/a"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -60,8 +60,56 @@ public partial class @PongControls: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""22d01162-faa1-4d99-8720-f2d6b5b99995"",
+                    ""id"": ""ad1c2c6d-7b16-4158-9531-be8d7043884c"",
                     ""path"": ""<Keyboard>/d"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""moveDown"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
+        },
+        {
+            ""name"": ""PongMap2"",
+            ""id"": ""4b503576-eab5-4135-90e1-6ad517fa4701"",
+            ""actions"": [
+                {
+                    ""name"": ""moveDown"",
+                    ""type"": ""Value"",
+                    ""id"": ""1f7132e3-2224-4024-8cc7-a1d695fb8118"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""moveUp"",
+                    ""type"": ""Value"",
+                    ""id"": ""fe334aa3-a1c1-4618-98d2-013ca3fae02f"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""577d7c0f-98c8-4f8f-ae51-04022bf774d1"",
+                    ""path"": ""<Keyboard>/rightArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""moveUp"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""384ac9c6-1d61-4faa-827b-a6ce620b141d"",
+                    ""path"": ""<Keyboard>/leftArrow"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -78,6 +126,10 @@ public partial class @PongControls: IInputActionCollection2, IDisposable
         m_PongMap = asset.FindActionMap("PongMap", throwIfNotFound: true);
         m_PongMap_moveUp = m_PongMap.FindAction("moveUp", throwIfNotFound: true);
         m_PongMap_moveDown = m_PongMap.FindAction("moveDown", throwIfNotFound: true);
+        // PongMap2
+        m_PongMap2 = asset.FindActionMap("PongMap2", throwIfNotFound: true);
+        m_PongMap2_moveDown = m_PongMap2.FindAction("moveDown", throwIfNotFound: true);
+        m_PongMap2_moveUp = m_PongMap2.FindAction("moveUp", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -189,9 +241,68 @@ public partial class @PongControls: IInputActionCollection2, IDisposable
         }
     }
     public PongMapActions @PongMap => new PongMapActions(this);
+
+    // PongMap2
+    private readonly InputActionMap m_PongMap2;
+    private List<IPongMap2Actions> m_PongMap2ActionsCallbackInterfaces = new List<IPongMap2Actions>();
+    private readonly InputAction m_PongMap2_moveDown;
+    private readonly InputAction m_PongMap2_moveUp;
+    public struct PongMap2Actions
+    {
+        private @PongControls m_Wrapper;
+        public PongMap2Actions(@PongControls wrapper) { m_Wrapper = wrapper; }
+        public InputAction @moveDown => m_Wrapper.m_PongMap2_moveDown;
+        public InputAction @moveUp => m_Wrapper.m_PongMap2_moveUp;
+        public InputActionMap Get() { return m_Wrapper.m_PongMap2; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(PongMap2Actions set) { return set.Get(); }
+        public void AddCallbacks(IPongMap2Actions instance)
+        {
+            if (instance == null || m_Wrapper.m_PongMap2ActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_PongMap2ActionsCallbackInterfaces.Add(instance);
+            @moveDown.started += instance.OnMoveDown;
+            @moveDown.performed += instance.OnMoveDown;
+            @moveDown.canceled += instance.OnMoveDown;
+            @moveUp.started += instance.OnMoveUp;
+            @moveUp.performed += instance.OnMoveUp;
+            @moveUp.canceled += instance.OnMoveUp;
+        }
+
+        private void UnregisterCallbacks(IPongMap2Actions instance)
+        {
+            @moveDown.started -= instance.OnMoveDown;
+            @moveDown.performed -= instance.OnMoveDown;
+            @moveDown.canceled -= instance.OnMoveDown;
+            @moveUp.started -= instance.OnMoveUp;
+            @moveUp.performed -= instance.OnMoveUp;
+            @moveUp.canceled -= instance.OnMoveUp;
+        }
+
+        public void RemoveCallbacks(IPongMap2Actions instance)
+        {
+            if (m_Wrapper.m_PongMap2ActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IPongMap2Actions instance)
+        {
+            foreach (var item in m_Wrapper.m_PongMap2ActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_PongMap2ActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public PongMap2Actions @PongMap2 => new PongMap2Actions(this);
     public interface IPongMapActions
     {
         void OnMoveUp(InputAction.CallbackContext context);
         void OnMoveDown(InputAction.CallbackContext context);
+    }
+    public interface IPongMap2Actions
+    {
+        void OnMoveDown(InputAction.CallbackContext context);
+        void OnMoveUp(InputAction.CallbackContext context);
     }
 }

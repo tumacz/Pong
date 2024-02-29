@@ -1,11 +1,4 @@
 using UnityEngine;
-using UnityEngine.InputSystem;
-
-public enum PlayerMode
-{
-    Human,
-    AI
-}
 
 public class Palette : MonoBehaviour
 {
@@ -15,22 +8,34 @@ public class Palette : MonoBehaviour
     [SerializeField] private float movementSpeed = 5f;
     [SerializeField] private float minY = -5f;
     [SerializeField] private float maxY = 5f;
-    [SerializeField] private PlayerMode _playerMode;
-    [SerializeField] private float _AIThreshold = .5f;
+    [SerializeField] private float _AIThreshold = 0.5f;
 
+    private PlayerMode _playerMode;
     private float _moveUpValue = 0f;
     private float _moveDownValue = 0f;
+    private int _playerNumber;
+
+    public void Initialize(PlayerMode mode, int playerNumber)
+    {
+        _playerMode = mode;
+        _playerNumber = playerNumber;
+        _inputController.Initialize(this, _playerNumber);
+    }
 
     private void Start()
     {
         _inputController = GetComponent<InputController>();
-        _inputController.Initialize(this);
+        _inputController.Initialize(this, _playerNumber);
     }
 
     private void OnDestroy()
     {
-        _inputController = GetComponent<InputController>();
         _inputController.Disable();
+    }
+
+    public void SetPlayerMode(PlayerMode mode)
+    {
+        _playerMode = mode;
     }
 
     public void OnMoveUpStarted()
