@@ -1,3 +1,4 @@
+using System;
 using TMPro;
 using UnityEngine;
 
@@ -11,11 +12,19 @@ public class ScoreBoard : MonoBehaviour
 
     [SerializeField] private TextMeshProUGUI _aScoreText;
     [SerializeField] private TextMeshProUGUI _bScoreText;
+    private Ball _ball;
 
-    private void Start()
+    public void SubscribeToBall(Ball ball)
     {
-        FindObjectOfType<Ball>().OnScore += UpdateScore;
-        UpdateScoreDisplay();
+        _ball = ball;
+        _ball.OnScore += UpdateScore;
+        //UpdateScoreDisplay();
+    }
+
+    public void SetScoreText(string startScoreText)
+    {
+        _aScoreText.text = startScoreText;
+        _bScoreText.text = startScoreText;
     }
 
     private void UpdateScoreDisplay()

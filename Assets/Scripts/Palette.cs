@@ -2,30 +2,27 @@ using UnityEngine;
 
 public class Palette : MonoBehaviour
 {
-    [SerializeField] private Ball _ball;
-    [SerializeField] private AIController _aiController;
-    [SerializeField] private InputController _inputController;
     [SerializeField] private float movementSpeed = 5f;
     [SerializeField] private float minY = -5f;
     [SerializeField] private float maxY = 5f;
     [SerializeField] private float _AIThreshold = 0.5f;
 
+    [SerializeField] private AIController _aiController;
+    [SerializeField] private InputController _inputController;
+    private Ball _ball;
     private PlayerMode _playerMode;
     private float _moveUpValue = 0f;
     private float _moveDownValue = 0f;
     private int _playerNumber;
 
-    public void Initialize(PlayerMode mode, int playerNumber)
+    public void Initialize(PlayerMode mode, int playerNumber, Ball ball)
     {
+        _ball = ball;
         _playerMode = mode;
         _playerNumber = playerNumber;
+        //_inputController = GetComponent<InputController>();
         _inputController.Initialize(this, _playerNumber);
-    }
 
-    private void Start()
-    {
-        _inputController = GetComponent<InputController>();
-        _inputController.Initialize(this, _playerNumber);
     }
 
     private void OnDestroy()
