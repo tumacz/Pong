@@ -501,6 +501,14 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1318946259}
     - target: {fileID: 5885395101570874137, guid: 955a4c43987eda149af5cf16eb3b6234, type: 3}
+      propertyPath: player1Mode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5885395101570874137, guid: 955a4c43987eda149af5cf16eb3b6234, type: 3}
+      propertyPath: player2Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5885395101570874137, guid: 955a4c43987eda149af5cf16eb3b6234, type: 3}
       propertyPath: _ballStartPosition
       value: 
       objectReference: {fileID: 1234129309}

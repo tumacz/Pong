@@ -35,6 +35,12 @@ public class Palette : MonoBehaviour
         _playerMode = mode;
     }
 
+    public void SetPlayerNumber(int playerNumber)
+    {
+        _playerNumber = playerNumber;
+        _inputController.Initialize(this, _playerNumber);
+    }
+
     public void OnMoveUpStarted()
     {
         if (_moveDownValue > 0f)

@@ -21,7 +21,7 @@ public class ScoreBoard : MonoBehaviour
         //UpdateScoreDisplay();
     }
 
-    public void SetScoreText(string startScoreText)
+    public void SetScoreText(string startScoreText)// redo
     {
         _aScoreText.text = startScoreText;
         _bScoreText.text = startScoreText;

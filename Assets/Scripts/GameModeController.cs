@@ -6,6 +6,18 @@ public enum PlayerMode
     AI
 }
 
+public enum PlayerMap
+{
+    map1 = 1,
+    map2 = 2
+}
+
+public enum GameMode
+{
+    SinglePlayer,
+    MultiPlayer
+}
+
 public class GameModeController : MonoBehaviour
 {
     [SerializeField] private ScoreBoard _scoreBoard;
@@ -31,10 +43,12 @@ public class GameModeController : MonoBehaviour
     private Ball _ball;
     private string _startScoreText = "0";
 
-    void Start()
+    private void Start()
     {
         InstantiateComponents();
-        InitializeComponents();
+
+        _scoreBoard.SubscribeToBall(_ball);
+        _scoreBoard.SetScoreText(_startScoreText);
     }
 
     private void InstantiateComponents()
@@ -47,47 +61,89 @@ public class GameModeController : MonoBehaviour
         else
         {
             Debug.LogError("Ball prefab is not assigned in the GameModeController.");
+            return;
         }
 
         // Instantiate the player 1 palette
-        if (player1PalettePrefab != null)
+        _player1Palette = InstantiatePalette(player1PalettePrefab, player1Mode, _player1PaletteSpawnPostion);
+        if (_player1Palette == null)
         {
-            _player1Palette = Instantiate(player1PalettePrefab, _player1PaletteSpawnPostion.position, Quaternion.identity, transform).GetComponent<Palette>();
-        }
-        else
-        {
-            Debug.LogError("Player 1 palette prefab is not assigned in the GameModeController.");
+            return;
         }
 
         // Instantiate the player 2 palette
-        if (player2PalettePrefab != null)
+        _player2Palette = InstantiatePalette(player2PalettePrefab, player2Mode, _player2PaletteSpawnPostion);
+        if (_player2Palette == null)
         {
-            _player2Palette = Instantiate(player2PalettePrefab, _player2PaletteSpawnPostion.position, Quaternion.identity, transform).GetComponent<Palette>();
+            return;
+        }
+    }
+
+    private Palette InstantiatePalette(GameObject palettePrefab, PlayerMode mode, Transform spawnPosition)
+    {
+        if (palettePrefab != null)
+        {
+            GameObject paletteObj = Instantiate(palettePrefab, spawnPosition.position, Quaternion.identity, transform);
+            Palette palette = paletteObj.GetComponent<Palette>();
+            palette.Initialize(mode, GetMapValue(PlayerMap.map1), _ball);
+            return palette;
         }
         else
         {
-            Debug.LogError("Player 2 palette prefab is not assigned in the GameModeController.");
+            Debug.LogError("Palette prefab is not assigned.");
+            return null;
         }
     }
 
-    private void InitializeComponents()
+    private int GetMapValue(PlayerMap map)
     {
-        _scoreBoard.SubscribeToBall(_ball);
-        // Initialize player palettes with their respective modes and numbers
-        _player1Palette.Initialize(player1Mode, 1, _ball);
-        _player2Palette.Initialize(player2Mode, 2, _ball);
-        _scoreBoard.SetScoreText(_startScoreText);
+        return (int)map;
     }
 
-    //public void SetPlayer1Mode(PlayerMode mode)
-    //{
-    //    player1Mode = mode;
-    //    _player1Palette.SetPlayerMode(player1Mode);
-    //}
+    public void SetGameMode(GameMode mode)
+    {
+        switch (mode)
+        {
+            case GameMode.SinglePlayer:
+                player1Mode = PlayerMode.Human;
+                player2Mode = PlayerMode.AI;
+                break;
+            case GameMode.MultiPlayer:
+                player1Mode = PlayerMode.Human;
+                player2Mode = PlayerMode.Human;
+                break;
+            default:
+                Debug.LogError("Invalid game mode.");
+                break;
+        }
+    }
 
-    //public void SetPlayer2Mode(PlayerMode mode)
-    //{
-    //    player2Mode = mode;
-    //    _player2Palette.SetPlayerMode(player2Mode);
-    //}
+    public void ChangePlayerSide()
+    {
+        // Swap player sides
+        PlayerMode tempMode = player1Mode;
+        player1Mode = player2Mode;
+        player2Mode = tempMode;
+
+        // Swap player maps
+        int tempMap = GetMapValue(PlayerMap.map1);
+        SetMapValue(PlayerMap.map1, GetMapValue(PlayerMap.map2));
+        SetMapValue(PlayerMap.map2, tempMap);
+    }
+
+    private void SetMapValue(PlayerMap map, int value)
+    {
+        switch (map)
+        {
+            case PlayerMap.map1:
+                _player1Palette.SetPlayerNumber(value);
+                break;
+            case PlayerMap.map2:
+                _player2Palette.SetPlayerNumber(value);
+                break;
+            default:
+                Debug.LogError("Invalid player map.");
+                break;
+        }
+    }
 }
