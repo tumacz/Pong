@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91ffa1d76906bdd4a91388f55f4d18cf, type: 3}
+  m_Name: GameSettings
+  m_EditorClassIdentifier: 
+  player1PalettePrefab: {fileID: 3220970246651963777, guid: d08184de1ec472148b96f24e72c2c3fe, type: 3}
+  player1Mode: 0
+  player2PalettePrefab: {fileID: 3220970246651963777, guid: d08184de1ec472148b96f24e72c2c3fe, type: 3}
+  player2Mode: 1
+  ballPrefab: {fileID: 8667310342858698617, guid: 2546c2568a6203c469689751fcd0f4fb, type: 3}
+  startScoreText: 0
+  defaultGameMode: 0
+  _player1PaletteNum: 1
+  _player2PaletteNum: 2

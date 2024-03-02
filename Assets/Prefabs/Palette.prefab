@@ -151,6 +151,7 @@ MonoBehaviour:
   _AIThreshold: 0.5
   _aiController: {fileID: 2435629445824438228}
   _inputController: {fileID: 5450773300759478596}
+  _playerNumber: 0
 --- !u!114 &2435629445824438228
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -175,3 +176,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b96c14b026d16e478f4655a0786220b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _playerNumber: 0

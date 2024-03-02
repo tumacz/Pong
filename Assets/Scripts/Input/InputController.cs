@@ -7,7 +7,7 @@ public class InputController : MonoBehaviour
     private Palette _palette;
     private InputAction _moveUpAction;
     private InputAction _moveDownAction;
-    private int _playerNumber;
+    [SerializeField] private int _playerNumber;
 
     public void Initialize(Palette palette, int playerNumber)
     {
@@ -15,32 +15,41 @@ public class InputController : MonoBehaviour
         _pongControls = new PongControls();
         _playerNumber = playerNumber;
 
-        if (_playerNumber == 1)
+        // SprawdŸ, czy akcje nie s¹ ju¿ przypisane
+        if (_moveUpAction == null && _moveDownAction == null)
         {
-            _moveUpAction = _pongControls.PongMap.moveUp;
-            _moveDownAction = _pongControls.PongMap.moveDown;
-        }
-        else if (_playerNumber == 2)
-        {
-            _moveUpAction = _pongControls.PongMap2.moveUp;
-            _moveDownAction = _pongControls.PongMap2.moveDown;
+            if (_playerNumber == 1)
+            {
+                _moveUpAction = _pongControls.PongMap.moveUp;
+                _moveDownAction = _pongControls.PongMap.moveDown;
+            }
+            else if (_playerNumber == 2)
+            {
+                _moveUpAction = _pongControls.PongMap2.moveUp;
+                _moveDownAction = _pongControls.PongMap2.moveDown;
+            }
+            else
+            {
+                Debug.LogError("Incorrect palette number!");
+                return;
+            }
+
+            _moveUpAction.started += ctx => _palette.OnMoveUpStarted();
+            _moveDownAction.started += ctx => _palette.OnMoveDownStarted();
+            _moveUpAction.canceled += ctx => _palette.ResetMoveUpValue();
+            _moveDownAction.canceled += ctx => _palette.ResetMoveDownValue();
+
+            _pongControls.Enable();
         }
         else
         {
-            Debug.LogError("Incorrect palette number!");
-            return;
+            Debug.LogWarning("Actions are already assigned.");
         }
-
-        _moveUpAction.started += ctx => _palette.OnMoveUpStarted();
-        _moveDownAction.started += ctx => _palette.OnMoveDownStarted();
-        _moveUpAction.canceled += ctx => _palette.ResetMoveUpValue();
-        _moveDownAction.canceled += ctx => _palette.ResetMoveDownValue();
-
-        _pongControls.Enable();
     }
 
     public void Disable()
     {
+        if(_pongControls != null)
         _pongControls.Disable();
     }
 }

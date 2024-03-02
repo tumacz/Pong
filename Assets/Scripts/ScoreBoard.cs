@@ -10,9 +10,34 @@ public class ScoreBoard : MonoBehaviour
     [SerializeField] private string _aScoreTag;
     [SerializeField] private string _bScoreTag;
 
+    [SerializeField] private Canvas _scoreCanvas;
     [SerializeField] private TextMeshProUGUI _aScoreText;
     [SerializeField] private TextMeshProUGUI _bScoreText;
     private Ball _ball;
+
+    public void EnableScoreCanvas()
+    {
+        if (_scoreCanvas != null)
+        {
+            _scoreCanvas.enabled = true;
+        }
+        else
+        {
+            Debug.LogError("Score Canvas is not assigned.");
+        }
+    }
+
+    public void DisableScoreCanvas()
+    {
+        if (_scoreCanvas != null)
+        {
+            _scoreCanvas.enabled = false;
+        }
+        else
+        {
+            Debug.LogError("Score Canvas is not assigned.");
+        }
+    }
 
     public void SubscribeToBall(Ball ball)
     {

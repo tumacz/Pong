@@ -10,19 +10,17 @@ public class Palette : MonoBehaviour
     [SerializeField] private AIController _aiController;
     [SerializeField] private InputController _inputController;
     private Ball _ball;
-    private PlayerMode _playerMode;
+    private PlayerMode _playerMode;//hide
     private float _moveUpValue = 0f;
     private float _moveDownValue = 0f;
-    private int _playerNumber;
+    [SerializeField] private int _playerNumber;
 
     public void Initialize(PlayerMode mode, int playerNumber, Ball ball)
     {
         _ball = ball;
         _playerMode = mode;
         _playerNumber = playerNumber;
-        //_inputController = GetComponent<InputController>();
         _inputController.Initialize(this, _playerNumber);
-
     }
 
     private void OnDestroy()
@@ -38,7 +36,6 @@ public class Palette : MonoBehaviour
     public void SetPlayerNumber(int playerNumber)
     {
         _playerNumber = playerNumber;
-        _inputController.Initialize(this, _playerNumber);
     }
 
     public void OnMoveUpStarted()

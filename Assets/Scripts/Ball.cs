@@ -22,7 +22,11 @@ public class Ball : MonoBehaviour
     private void Start()
     {
         GetReferences(_paletteTag, _aScoreTag, _bScoreTag);
-        StartBall();
+    }
+
+    public void StartBall()
+    {
+        ResetBall();
     }
 
     private void GetReferences(params string[] tags)
@@ -39,8 +43,7 @@ public class Ball : MonoBehaviour
         }
     }
 
-
-    private void StartBall()
+    private void InitializeBall()
     {
         float initialXSpeed = Mathf.Sign(Random.Range(-1f, 1f)) * _initialSpeed;
         float initialYSpeed = Random.Range(-1f, 1f) * _initialSpeed;
@@ -58,7 +61,7 @@ public class Ball : MonoBehaviour
         transform.position = Vector2.zero;
         hitCounter = 0;
         yield return new WaitForSeconds(delay);
-        StartBall();
+        InitializeBall();
     }
 
     private void BounceBall(Transform player)
