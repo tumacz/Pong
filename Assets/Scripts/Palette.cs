@@ -2,20 +2,21 @@ using UnityEngine;
 
 public class Palette : MonoBehaviour
 {
-    [SerializeField] private float movementSpeed = 5f;
-    [SerializeField] private float minY = -5f;
-    [SerializeField] private float maxY = 5f;
-    [SerializeField] private float _AIThreshold = 0.5f;
+    [SerializeField] private float _movementSpeed = 5f;
+    [SerializeField] private float _minYRange = -5f;
+    [SerializeField] private float _maxYRange = 5f;
+    [SerializeField] private float _aiActivationThreshold = 0.5f;
 
     [SerializeField] private AIController _aiController;
     [SerializeField] private InputController _inputController;
+
     private Ball _ball;
-    private PlayerMode _playerMode;//hide
+    private PlayerState _playerMode;
     private float _moveUpValue = 0f;
     private float _moveDownValue = 0f;
-    [SerializeField] private int _playerNumber;
+    private int _playerNumber;
 
-    public void Initialize(PlayerMode mode, int playerNumber, Ball ball)
+    public void Initialize(PlayerState mode, int playerNumber, Ball ball)
     {
         _ball = ball;
         _playerMode = mode;
@@ -25,10 +26,13 @@ public class Palette : MonoBehaviour
 
     private void OnDestroy()
     {
-        _inputController.Disable();
+        if (_inputController != null)
+        {
+            _inputController.Disable();
+        }
     }
 
-    public void SetPlayerMode(PlayerMode mode)
+    public void SetPlayerMode(PlayerState mode)
     {
         _playerMode = mode;
     }
@@ -84,9 +88,9 @@ public class Palette : MonoBehaviour
 
     private void Update()
     {
-        if (_playerMode == PlayerMode.AI)
+        if (_playerMode == PlayerState.Computer)
         {
-            _aiController.AIControll(_ball, _AIThreshold, movementSpeed, minY, maxY, ref _moveUpValue, ref _moveDownValue);
+            _aiController.AIControll(_ball, _aiActivationThreshold, _movementSpeed, _minYRange, _maxYRange, ref _moveUpValue, ref _moveDownValue);
         }
         else
         {
@@ -98,12 +102,14 @@ public class Palette : MonoBehaviour
     private void Move(float moveInput)
     {
         if (Mathf.Approximately(moveInput, 0f))
+        {
             return;
+        }
 
-        float yOffset = moveInput * movementSpeed * Time.deltaTime;
+        float yOffset = moveInput * _movementSpeed * Time.deltaTime;
         float newYPosition = transform.position.y + yOffset;
 
-        newYPosition = Mathf.Clamp(newYPosition, minY, maxY);
+        newYPosition = Mathf.Clamp(newYPosition, _minYRange, _maxYRange);
         transform.position = new Vector3(transform.position.x, newYPosition, transform.position.z);
     }
 }

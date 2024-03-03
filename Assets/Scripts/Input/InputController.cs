@@ -7,7 +7,7 @@ public class InputController : MonoBehaviour
     private Palette _palette;
     private InputAction _moveUpAction;
     private InputAction _moveDownAction;
-    [SerializeField] private int _playerNumber;
+    private int _playerNumber;
 
     public void Initialize(Palette palette, int playerNumber)
     {
@@ -15,7 +15,6 @@ public class InputController : MonoBehaviour
         _pongControls = new PongControls();
         _playerNumber = playerNumber;
 
-        // Sprawdü, czy akcje nie sπ juø przypisane
         if (_moveUpAction == null && _moveDownAction == null)
         {
             if (_playerNumber == 1)
@@ -49,7 +48,6 @@ public class InputController : MonoBehaviour
 
     public void Disable()
     {
-        if(_pongControls != null)
         _pongControls.Disable();
     }
 }

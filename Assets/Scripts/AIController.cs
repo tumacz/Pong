@@ -2,14 +2,14 @@ using UnityEngine;
 
 public class AIController : MonoBehaviour
 {
-    public void AIControll(Ball ball, float AIThreshold, float movementSpeed, float minY, float maxY, ref float moveUpValue, ref float moveDownValue)
+    public void AIControll(Ball ball, float aiActivationThreshold, float movementSpeed, float minYRange, float maxYRange, ref float moveUpValue, ref float moveDownValue)
     {
         if (ball != null)
         {
             float yDifference = Mathf.Abs(ball.transform.position.y - transform.position.y);
 
             // If the difference in y positions is greater than the threshold
-            if (yDifference > AIThreshold)
+            if (yDifference > aiActivationThreshold)
             {
                 // If the ball is below the AI palette
                 if (ball.transform.position.y < transform.position.y)
@@ -38,7 +38,7 @@ public class AIController : MonoBehaviour
             }
 
             // Execute the movement
-            ExecuteMovement(movementSpeed, minY, maxY, moveUpValue, moveDownValue);
+            ExecuteMovement(movementSpeed, minYRange, maxYRange, moveUpValue, moveDownValue);
         }
     }
 
@@ -57,5 +57,3 @@ public class AIController : MonoBehaviour
         transform.position = new Vector3(transform.position.x, newYPosition, transform.position.z);
     }
 }
-
-

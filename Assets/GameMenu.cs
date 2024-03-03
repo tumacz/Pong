@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class GameMenu : MonoBehaviour
@@ -15,7 +12,7 @@ public class GameMenu : MonoBehaviour
     }
     public void StartPong()
     {
-        _gameModeController.InitializeGame();
+        _gameModeController.StartGame();
         _gameMenuCanvas.enabled = false;
     }
 

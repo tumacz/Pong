@@ -3,7 +3,10 @@ guid: 91ffa1d76906bdd4a91388f55f4d18cf
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - Player1PalettePrefab: {fileID: 3220970246651963777, guid: d08184de1ec472148b96f24e72c2c3fe, type: 3}
+  - Player2PalettePrefab: {fileID: 3220970246651963777, guid: d08184de1ec472148b96f24e72c2c3fe, type: 3}
+  - BallPrefab: {fileID: 8667310342858698617, guid: 2546c2568a6203c469689751fcd0f4fb, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

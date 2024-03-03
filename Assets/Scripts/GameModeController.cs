@@ -1,13 +1,13 @@
 using System;
 using UnityEngine;
 
-public enum PlayerMode
+public enum PlayerState
 {
     Human,
-    AI
+    Computer
 }
 
-public enum PlayerMap
+public enum PlayerInputMapNumber
 {
     map1 = 1,
     map2 = 2
@@ -22,46 +22,51 @@ public enum GameMode
 public class GameModeController : MonoBehaviour
 {
     [SerializeField] private ScoreBoard _scoreBoard;
-    public GameSettings _gameSettings;
+    [SerializeField] private GameSettings _gameSettings;
 
     private Palette _player1Palette;
     private Palette _player2Palette;
     private Ball _ball;
+
     [HideInInspector] public GameMode _currentGameMode;
     [SerializeField] private Transform _ballStartPosition;
     [SerializeField] private Transform _player1PaletteSpawnPosition;
     [SerializeField] private Transform _player2PaletteSpawnPosition;
-    private GameObject _player1PalettePrefab;
-    private PlayerMode _player1Mode;
-    private GameObject _player2PalettePrefab;
-    private PlayerMode _player2Mode;
-    private GameObject _ballPrefab;
-    private string _startScoreText;
 
-    private int _player1PaletteNum;
-    private int _player2PaletteNum;
+    private GameObject _player1PalettePrefab;
+    private GameObject _player2PalettePrefab;
+    private PlayerState _player1State;
+    private PlayerState _player2State;
+    private GameObject _ballPrefab;
+
+    private int _player1MapNumber;
+    private int _player2MapNumber;
 
     private void Start()
     {
-        _player1PalettePrefab = _gameSettings.player1PalettePrefab;
-        _player1Mode = _gameSettings.player1Mode;
-        _player2PalettePrefab = _gameSettings.player2PalettePrefab;
-        _player2Mode = _gameSettings.player2Mode;
-        _ballPrefab = _gameSettings.ballPrefab;
-        _startScoreText = _gameSettings.startScoreText;
+        if (_gameSettings != null)
+        {
+            _player1PalettePrefab = _gameSettings.Player1PalettePrefab;
+            _player1State = _gameSettings.Player1Mode;
+            _player2PalettePrefab = _gameSettings.Player2PalettePrefab;
+            _player2State = _gameSettings.Player2Mode;
+            _ballPrefab = _gameSettings.BallPrefab;
 
-        _player1PaletteNum = _gameSettings._player1PaletteNum;
-        _player2PaletteNum = _gameSettings._player2PaletteNum;
-        _currentGameMode = _gameSettings.defaultGameMode;
-        InstantiateComponents();
-        GetPlayerNumber();
+            SetPlayerMapNumbers();
+
+            _currentGameMode = _gameSettings.DefaultGameMode;
+            InstantiateComponents();
+        }
+        else
+        {
+            Debug.Log("GameSettings is not assigned!");
+        }
     }
 
-
-    private void GetPlayerNumber()
+    private void SetPlayerMapNumbers()
     {
-        _gameSettings._player1PaletteNum = GetMapValue(PlayerMap.map1);
-        _gameSettings._player2PaletteNum = GetMapValue(PlayerMap.map2);
+        _player1MapNumber = _gameSettings.Player1PaletteNum;
+        _player2MapNumber = _gameSettings.Player2PaletteNum;
     }
 
     private void InstantiateComponents()
@@ -71,37 +76,25 @@ public class GameModeController : MonoBehaviour
         _player2Palette = Utility.InstantiatePalette(_player2PalettePrefab, _player2PaletteSpawnPosition, transform);
     }
 
-    public void InitializeGame()
-    {
-        InitializePalettes();
-        StartGame();
-    }
-
-    private void InitializePalettes()
-    {
-        // Initialize the player 1 palette
-        if (_player1Palette != null)
-        {
-            _player1Palette.Initialize(_player1Mode, _player1PaletteNum, _ball);
-        }
-
-        // Initialize the player 2 palette
-        if (_player2Palette != null)
-        {
-            _player2Palette.Initialize(_player2Mode, _player2PaletteNum, _ball);
-        }
-    }
-
-    private int GetMapValue(PlayerMap map)
-    {
-        return (int)map;
-    }
-
     public void StartGame()
+    {
+        InitializePalette(_player1Palette, _player1State, _player1MapNumber);
+        InitializePalette(_player2Palette, _player2State, _player2MapNumber);
+        InitializeGame();
+    }
+
+    private void InitializePalette(Palette palette, PlayerState state, int mapNumber)
+    {
+        if (palette != null)
+        {
+            palette.Initialize(state, mapNumber, _ball);
+        }
+    }
+
+    public void InitializeGame()
     {
         _scoreBoard.EnableScoreCanvas();
         _scoreBoard.SubscribeToBall(_ball);
-        _scoreBoard.SetScoreText(_startScoreText);
         _ball.StartBall();
     }
 
@@ -110,17 +103,17 @@ public class GameModeController : MonoBehaviour
         switch (mode)
         {
             case GameMode.SinglePlayer:
-                _player1Mode = PlayerMode.Human;
-                _player2Mode = PlayerMode.AI;
-                _player1PaletteNum = 1;
-                _player2PaletteNum = 2;
+                _player1State = PlayerState.Human;
+                _player2State = PlayerState.Computer;
+                _player1MapNumber = 1;
+                _player2MapNumber = 2;
                 _currentGameMode = GameMode.SinglePlayer;
                 break;
             case GameMode.MultiPlayer:
-                _player1Mode = PlayerMode.Human;
-                _player2Mode = PlayerMode.Human;
-                _player1PaletteNum = 1;
-                _player2PaletteNum = 2;
+                _player1State = PlayerState.Human;
+                _player2State = PlayerState.Human;
+                _player1MapNumber = 1;
+                _player2MapNumber = 2;
                 _currentGameMode = GameMode.MultiPlayer;
                 break;
             default:
@@ -134,44 +127,45 @@ public class GameModeController : MonoBehaviour
         switch (currentGameMode)
         {
             case GameMode.SinglePlayer:
-                // Swap player sides
-                PlayerMode tempMode = _player1Mode;
-                _player1Mode = _player2Mode;
-                _player2Mode = tempMode;
-
-                // Swap player maps
-                int tempMap = _player1PaletteNum;
-                _player1PaletteNum = _player2PaletteNum;
-                _player2PaletteNum = tempMap;
+                SwapPlayersState();
+                SwapPlayerMapNumbers();
                 break;
             case GameMode.MultiPlayer:
-                int tempMapMulti = _player1PaletteNum;
-                _player1PaletteNum = _player2PaletteNum;
-                _player2PaletteNum = tempMapMulti;
+                SwapPlayerMapNumbers();
                 break;
             default:
                 Debug.LogError("Invalid game mode.");
                 break;
         }
 
-        // Update palettes with new map values
-        SetMapValue(PlayerMap.map1, _player1PaletteNum);
-        SetMapValue(PlayerMap.map2, _player2PaletteNum);
+        UpdatePalettesWithNewMapValues();
     }
 
-    private void SetMapValue(PlayerMap map, int value)
+    private void SwapPlayersState()
     {
-        switch (map)
+        PlayerState tempState = _player1State;
+        _player1State = _player2State;
+        _player2State = tempState;
+    }
+
+    private void SwapPlayerMapNumbers()
+    {
+        int tempMap = _player1MapNumber;
+        _player1MapNumber = _player2MapNumber;
+        _player2MapNumber = tempMap;
+    }
+
+    private void UpdatePalettesWithNewMapValues()
+    {
+        SetPaletteMapNumber(_player1Palette, _player1MapNumber);
+        SetPaletteMapNumber(_player2Palette, _player2MapNumber);
+    }
+
+    private void SetPaletteMapNumber(Palette palette, int mapNumber)
+    {
+        if (palette != null)
         {
-            case PlayerMap.map1:
-                _player1Palette.SetPlayerNumber(value);
-                break;
-            case PlayerMap.map2:
-                _player2Palette.SetPlayerNumber(value);
-                break;
-            default:
-                Debug.LogError("Invalid player map.");
-                break;
+            palette.SetPlayerNumber(mapNumber);
         }
     }
 }

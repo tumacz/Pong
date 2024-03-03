@@ -7,23 +7,21 @@ public class GameSettings : ScriptableObject
 
     [Header("Left Side Player")]
     [Tooltip("Prefab representing the left side player palette.")]
-    public GameObject player1PalettePrefab;
-    public PlayerMode player1Mode;
+    public GameObject Player1PalettePrefab;
+    public PlayerState Player1Mode;
 
     [Header("Right Side Player")]
     [Tooltip("Prefab representing the right side player palette.")]
-    public GameObject player2PalettePrefab;
-    public PlayerMode player2Mode;
+    public GameObject Player2PalettePrefab;
+    public PlayerState Player2Mode;
 
     [Header("Ball")]
     [Tooltip("Prefab representing the ball.")]
-    public GameObject ballPrefab;
+    public GameObject BallPrefab;
+    public GameMode DefaultGameMode;
 
-    public string startScoreText;
-    public GameMode defaultGameMode;
-
-    public int _player1PaletteNum;
-    public int _player2PaletteNum;
+    public int Player1PaletteNum;
+    public int Player2PaletteNum;
 
     private void Awake()
     {
