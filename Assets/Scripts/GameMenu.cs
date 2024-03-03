@@ -28,7 +28,7 @@ public class GameMenu : MonoBehaviour
     public void StartPong()
     {
         _gameMenuCanvas.enabled = false;
-        _gameModeController.StartGame();
+        _gameModeController.StartMatch();
     }
 
     public void ChangeSide()

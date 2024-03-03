@@ -25,6 +25,19 @@ public class Ball : MonoBehaviour
         GetReferences(_paletteTag, RightScoreTag, LeftScoreTag);
     }
 
+    private void GetReferences(params string[] tags)
+    {
+        _rb = GetComponent<Rigidbody2D>();
+        _tags = new List<string>(tags);
+    }
+
+    private void InitializeBall()
+    {
+        float initialXSpeed = Mathf.Sign(Random.Range(-1f, 1f)) * _initialSpeed;
+        float initialYSpeed = Random.Range(-1f, 1f) * _initialSpeed;
+        _rb.velocity = new Vector2(initialXSpeed, initialYSpeed);
+    }
+
     public void StartBall()
     {
         if (!_matchEnded)
@@ -34,25 +47,12 @@ public class Ball : MonoBehaviour
         }
     }
 
-    private void GetReferences(params string[] tags)
-    {
-        _rb = GetComponent<Rigidbody2D>();
-        _tags = new List<string>(tags);
-    }
-
     private void FixedUpdate()
     {
         if (_rb.velocity.sqrMagnitude > _maxSpeed * _maxSpeed)
         {
             _rb.velocity = _rb.velocity.normalized * _maxSpeed;
         }
-    }
-
-    private void InitializeBall()
-    {
-        float initialXSpeed = Mathf.Sign(Random.Range(-1f, 1f)) * _initialSpeed;
-        float initialYSpeed = Random.Range(-1f, 1f) * _initialSpeed;
-        _rb.velocity = new Vector2(initialXSpeed, initialYSpeed);
     }
 
     private IEnumerator StartBallAfterDelay(float delay)
@@ -79,7 +79,7 @@ public class Ball : MonoBehaviour
         float yDirection = Mathf.Clamp((transform.position.y - player.position.y) / player.GetComponent<Collider2D>().bounds.size.y, -1f, 1f);
         yDirection += Random.Range(-0.25f, 0.25f);
 
-        _rb.velocity = new Vector2(xDirection, yDirection) * (_initialSpeed + _speedIncrease * _hitCounter);
+        _rb.velocity = new Vector2(xDirection, yDirection).normalized * (_initialSpeed + _speedIncrease * _hitCounter);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

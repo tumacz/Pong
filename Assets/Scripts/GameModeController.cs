@@ -73,6 +73,13 @@ public class GameModeController : MonoBehaviour
         }
     }
 
+    public void StartMatch()
+    {
+        InitializePalette(_player1Palette, _player1State, _player1MapNumber);
+        InitializePalette(_player2Palette, _player2State, _player2MapNumber);
+        InitializeGame();
+    }
+
     public void EndMatch()
     {
         _scoreBoard.DisableScoreCanvas();
@@ -107,13 +114,6 @@ public class GameModeController : MonoBehaviour
         _ball = Utility.InstantiateBall(_ballPrefab, _ballStartPosition, transform);
         _player1Palette = Utility.InstantiatePalette(_player1PalettePrefab, _player1PaletteSpawnPosition, transform);
         _player2Palette = Utility.InstantiatePalette(_player2PalettePrefab, _player2PaletteSpawnPosition, transform);
-    }
-
-    public void StartGame()
-    {
-        InitializePalette(_player1Palette, _player1State, _player1MapNumber);
-        InitializePalette(_player2Palette, _player2State, _player2MapNumber);
-        InitializeGame();
     }
 
     private void InitializePalette(Palette palette, PlayerState state, int mapNumber)
