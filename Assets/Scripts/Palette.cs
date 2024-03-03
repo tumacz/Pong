@@ -24,7 +24,7 @@ public class Palette : MonoBehaviour
         _inputController.Initialize(this, _playerNumber);
     }
 
-    private void OnDestroy()
+    public void OnMatchFinished()
     {
         if (_inputController != null)
         {

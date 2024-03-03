@@ -6,14 +6,29 @@ public class GameMenu : MonoBehaviour
     [SerializeField] Canvas _gameMenuCanvas;
     [SerializeField] GameMode _currentGameMode;
 
+    private void OnEnable()
+    {
+        _gameModeController._scoreBoard.OnWin += EnableGameMenu;
+    }
+
+    private void OnDestroy()
+    {
+        _gameModeController._scoreBoard.OnWin -= EnableGameMenu;
+    }
+
     private void Start()
     {
         _currentGameMode = _gameModeController._currentGameMode;
     }
+
+    private void EnableGameMenu()
+    {
+        _gameMenuCanvas.enabled = true;
+    }
     public void StartPong()
     {
-        _gameModeController.StartGame();
         _gameMenuCanvas.enabled = false;
+        _gameModeController.StartGame();
     }
 
     public void ChangeSide()

@@ -4,7 +4,11 @@
 TagManager:
   serializedVersion: 2
   tags:
+  - ScoreLeft
+  - ScoreRight
+  - Undefined
   - Palette
+  - score
   - ScoreA
   - ScoreB
   layers:

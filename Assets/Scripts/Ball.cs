@@ -11,22 +11,27 @@ public class Ball : MonoBehaviour
     [SerializeField] private float _speedIncrease = 0.25f;
     [SerializeField] private float _startDelay = 2f;
     [SerializeField] private string _paletteTag;
-    [SerializeField] private string _aScoreTag;
-    [SerializeField] private string _bScoreTag;
+    public string RightScoreTag;
+    public string LeftScoreTag;
 
     private List<string> _tags;
     private Rigidbody2D _rb;
     private int _hitCounter = 0;
+    private bool _matchEnded = false;
     public event Action<string> OnScore;
 
     private void Start()
     {
-        GetReferences(_paletteTag, _aScoreTag, _bScoreTag);
+        GetReferences(_paletteTag, RightScoreTag, LeftScoreTag);
     }
 
     public void StartBall()
     {
-        ResetBall();
+        if (!_matchEnded)
+        {
+            ResetBall();
+            StartCoroutine(StartBallAfterDelay(_startDelay));
+        }
     }
 
     private void GetReferences(params string[] tags)
@@ -50,21 +55,21 @@ public class Ball : MonoBehaviour
         _rb.velocity = new Vector2(initialXSpeed, initialYSpeed);
     }
 
-    public void ResetBall()
-    {
-        StartCoroutine(StartBallAfterDelay(_startDelay));
-    }
-
     private IEnumerator StartBallAfterDelay(float delay)
     {
-        _rb.velocity = Vector2.zero;
-        transform.position = Vector2.zero;
-        _hitCounter = 0;
+        ResetBall();
         yield return new WaitForSeconds(delay);
         InitializeBall();
     }
 
-    private void BounceBall(Transform player)
+    public void ResetBall()
+    {
+        _rb.velocity = Vector2.zero;
+        transform.position = Vector2.zero;
+        _hitCounter = 0;
+    }
+
+    private void BounceBall(Transform player)//redo
     {
         _hitCounter++;
         Vector2 ballPosition = transform.position;
@@ -87,15 +92,15 @@ public class Ball : MonoBehaviour
             {
                 BounceBall(collision.transform);
             }
-            else if (collisionTag == _aScoreTag)
+            else if (collisionTag == RightScoreTag)
             {
-                OnScore?.Invoke(_aScoreTag);
-                ResetBall();
+                OnScore?.Invoke(RightScoreTag);
+                StartBall();
             }
-            else if (collisionTag == _bScoreTag)
+            else if (collisionTag == LeftScoreTag)
             {
-                OnScore?.Invoke(_bScoreTag);
-                ResetBall();
+                OnScore?.Invoke(LeftScoreTag);
+                StartBall();
             }
         }
     }

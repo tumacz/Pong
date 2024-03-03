@@ -104,9 +104,8 @@ MonoBehaviour:
   _speedIncrease: 0.25
   _startDelay: 2
   _paletteTag: Palette
-  _aScoreTag: ScoreA
-  _bScoreTag: ScoreB
-  hitCounter: 0
+  RightScoreTag: ScoreRight
+  LeftScoreTag: ScoreLeft
 --- !u!50 &8061919744811630111
 Rigidbody2D:
   serializedVersion: 4

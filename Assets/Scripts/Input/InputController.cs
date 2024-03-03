@@ -48,6 +48,14 @@ public class InputController : MonoBehaviour
 
     public void Disable()
     {
-        _pongControls.Disable();
+        if (_pongControls != null)
+        {
+            _moveUpAction.started -= ctx => _palette.OnMoveUpStarted();
+            _moveDownAction.started -= ctx => _palette.OnMoveDownStarted();
+            _moveUpAction.canceled -= ctx => _palette.ResetMoveUpValue();
+            _moveDownAction.canceled -= ctx => _palette.ResetMoveDownValue();
+
+            _pongControls.Disable();
+        }
     }
 }

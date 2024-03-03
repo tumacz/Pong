@@ -151,6 +151,7 @@ MonoBehaviour:
   _aiActivationThreshold: 0.75
   _aiController: {fileID: 2435629445824438228}
   _inputController: {fileID: 5450773300759478596}
+  _ball: {fileID: 0}
 --- !u!114 &2435629445824438228
 MonoBehaviour:
   m_ObjectHideFlags: 0

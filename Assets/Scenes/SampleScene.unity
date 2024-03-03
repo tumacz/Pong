@@ -123,6 +123,17 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!114 &456617257 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3246107195038575851, guid: 955a4c43987eda149af5cf16eb3b6234, type: 3}
+  m_PrefabInstance: {fileID: 3540475400503172899}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -410,6 +421,17 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1330162830 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3364628228351525326, guid: 955a4c43987eda149af5cf16eb3b6234, type: 3}
+  m_PrefabInstance: {fileID: 3540475400503172899}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &3540475400503172899
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -418,9 +440,37 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 353078210119487541, guid: 955a4c43987eda149af5cf16eb3b6234, type: 3}
+      propertyPath: m_TagString
+      value: ScoreLeft
+      objectReference: {fileID: 0}
     - target: {fileID: 1651895691532832510, guid: 955a4c43987eda149af5cf16eb3b6234, type: 3}
       propertyPath: m_Name
       value: GameBoard
+      objectReference: {fileID: 0}
+    - target: {fileID: 2022078503669958446, guid: 955a4c43987eda149af5cf16eb3b6234, type: 3}
+      propertyPath: _leftScoreTag
+      value: ScoreLeft
+      objectReference: {fileID: 0}
+    - target: {fileID: 2022078503669958446, guid: 955a4c43987eda149af5cf16eb3b6234, type: 3}
+      propertyPath: _leftScoreText
+      value: 
+      objectReference: {fileID: 456617257}
+    - target: {fileID: 2022078503669958446, guid: 955a4c43987eda149af5cf16eb3b6234, type: 3}
+      propertyPath: _rightScoreTag
+      value: ScoreRight
+      objectReference: {fileID: 0}
+    - target: {fileID: 2022078503669958446, guid: 955a4c43987eda149af5cf16eb3b6234, type: 3}
+      propertyPath: _rightScoreText
+      value: 
+      objectReference: {fileID: 1330162830}
+    - target: {fileID: 2022078503669958446, guid: 955a4c43987eda149af5cf16eb3b6234, type: 3}
+      propertyPath: onWinActionDescription
+      value: ScoreBoard.EndMatch(), GameMeny.EnableGameMenu()
+      objectReference: {fileID: 0}
+    - target: {fileID: 3091629197694001746, guid: 955a4c43987eda149af5cf16eb3b6234, type: 3}
+      propertyPath: m_TagString
+      value: ScoreRight
       objectReference: {fileID: 0}
     - target: {fileID: 4039105038656938372, guid: 955a4c43987eda149af5cf16eb3b6234, type: 3}
       propertyPath: m_LocalPosition.x

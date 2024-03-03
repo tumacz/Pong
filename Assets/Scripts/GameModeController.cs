@@ -21,7 +21,7 @@ public enum GameMode
 
 public class GameModeController : MonoBehaviour
 {
-    [SerializeField] private ScoreBoard _scoreBoard;
+    [SerializeField] public ScoreBoard _scoreBoard;
     [SerializeField] private GameSettings _gameSettings;
 
     private Palette _player1Palette;
@@ -42,6 +42,16 @@ public class GameModeController : MonoBehaviour
     private int _player1MapNumber;
     private int _player2MapNumber;
 
+    private void OnEnable()
+    {
+        _scoreBoard.OnWin += EndMatch;
+    }
+
+    private void OnDisable()
+    {
+        _scoreBoard.OnWin -= EndMatch;
+    }
+
     private void Start()
     {
         if (_gameSettings != null)
@@ -61,6 +71,29 @@ public class GameModeController : MonoBehaviour
         {
             Debug.Log("GameSettings is not assigned!");
         }
+    }
+
+    public void EndMatch()
+    {
+        _scoreBoard.DisableScoreCanvas();
+        if (_player1Palette != null)
+        {
+            _player1Palette.OnMatchFinished();
+            Destroy(_player1Palette.gameObject);
+        }
+        if (_player2Palette != null)
+        {
+            _player2Palette.OnMatchFinished();
+            Destroy(_player2Palette.gameObject);
+        }
+        if (_ball != null)
+        {
+            Destroy(_ball.gameObject);
+        }
+        _player1Palette = null;
+        _player2Palette = null;
+        _ball = null;
+        InstantiateComponents();
     }
 
     private void SetPlayerMapNumbers()
