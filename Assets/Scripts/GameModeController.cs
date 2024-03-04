@@ -28,7 +28,7 @@ public class GameModeController : MonoBehaviour
     private Palette _player2Palette;
     private Ball _ball;
 
-    [HideInInspector] public GameMode _currentGameMode;
+     public GameMode CurrentGameMode;//[HideInInspector]
     [SerializeField] private Transform _ballStartPosition;
     [SerializeField] private Transform _player1PaletteSpawnPosition;
     [SerializeField] private Transform _player2PaletteSpawnPosition;
@@ -64,7 +64,7 @@ public class GameModeController : MonoBehaviour
 
             SetPlayerMapNumbers();
 
-            _currentGameMode = _gameSettings.DefaultGameMode;
+            CurrentGameMode = _gameSettings.DefaultGameMode;
             InstantiateComponents();
         }
         else
@@ -140,14 +140,14 @@ public class GameModeController : MonoBehaviour
                 _player2State = PlayerState.Computer;
                 _player1MapNumber = 1;
                 _player2MapNumber = 2;
-                _currentGameMode = GameMode.SinglePlayer;
+                CurrentGameMode = GameMode.SinglePlayer;
                 break;
             case GameMode.MultiPlayer:
                 _player1State = PlayerState.Human;
                 _player2State = PlayerState.Human;
                 _player1MapNumber = 1;
                 _player2MapNumber = 2;
-                _currentGameMode = GameMode.MultiPlayer;
+                CurrentGameMode = GameMode.MultiPlayer;
                 break;
             default:
                 Debug.LogError("Invalid game mode.");
