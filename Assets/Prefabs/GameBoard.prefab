@@ -410,6 +410,8 @@ GameObject:
   - component: {fileID: 5941189932968896175}
   - component: {fileID: 5586351946014774574}
   - component: {fileID: 5029833696775190268}
+  - component: {fileID: 8513728160708988142}
+  - component: {fileID: 4167066038685612436}
   m_Layer: 0
   m_Name: GameMenuCanvas
   m_TagString: Untagged
@@ -515,9 +517,41 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6df77a5850ba774ba6661b5fc01b3ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _buttons:
+  - {fileID: 8369111765015313916}
+  - {fileID: 7515872192841040791}
+  - {fileID: 2896166616847993365}
+  - {fileID: 3855896590301145484}
   _startPongButton: {fileID: 2896166616847993365}
   _changeGameModeButton: {fileID: 8369111765015313916}
   _changeSideButton: {fileID: 7515872192841040791}
+  _quitAppButton: {fileID: 3855896590301145484}
+--- !u!114 &8513728160708988142
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1444858918332046554}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd59b8be8b967dc408c1b82078f1f777, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _gameMenuUIEffectManager: {fileID: 5029833696775190268}
+--- !u!114 &4167066038685612436
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1444858918332046554}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 038a3934ba12b7d49a7c718bbb8b9afb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _buttonIndicator: {fileID: 8513728160708988142}
 --- !u!1 &1651895691532832510
 GameObject:
   m_ObjectHideFlags: 0
@@ -604,6 +638,7 @@ MonoBehaviour:
   _gameModeController: {fileID: 5885395101570874137}
   _gameMenuCanvas: {fileID: 3447911164658742146}
   _gameMenuUIEffectManager: {fileID: 5029833696775190268}
+  _menuInputController: {fileID: 4167066038685612436}
 --- !u!1 &1748151233851814207
 GameObject:
   m_ObjectHideFlags: 0

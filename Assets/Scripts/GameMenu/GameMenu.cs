@@ -7,6 +7,7 @@ public class GameMenu : MonoBehaviour
     [SerializeField] private GameModeController _gameModeController;
     [SerializeField] private Canvas _gameMenuCanvas;
     [SerializeField] private GameMenuUIEffectManager _gameMenuUIEffectManager;
+    [SerializeField] private MenuInputController _menuInputController;
 
     private GameMode _currentGameMode => _gameModeController.CurrentGameMode;
 
@@ -28,11 +29,14 @@ public class GameMenu : MonoBehaviour
     private void EnableGameMenu()
     {
         _gameMenuCanvas.enabled = true;
+        _menuInputController.EnableMenuControls();
+
     }
 
     public void StartPong()
     {
         _gameMenuCanvas.enabled = false;
+        _menuInputController.DisableMenuControls();
         _gameModeController.StartMatch();
     }
 

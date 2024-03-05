@@ -23,12 +23,14 @@ public class GameModeController : MonoBehaviour
 {
     [SerializeField] public ScoreBoard _scoreBoard;
     [SerializeField] private GameSettings _gameSettings;
+    [Tooltip("The score difference required for a player to win. When the difference between the scores of the two players reaches or exceeds this value, the game ends.")]
+    [SerializeField] private int _winScoreCondition;
 
     private Palette _player1Palette;
     private Palette _player2Palette;
     private Ball _ball;
 
-     public GameMode CurrentGameMode;//[HideInInspector]
+    [HideInInspector] public GameMode CurrentGameMode;
     [SerializeField] private Transform _ballStartPosition;
     [SerializeField] private Transform _player1PaletteSpawnPosition;
     [SerializeField] private Transform _player2PaletteSpawnPosition;
@@ -127,7 +129,7 @@ public class GameModeController : MonoBehaviour
     public void InitializeGame()
     {
         _scoreBoard.EnableScoreCanvas();
-        _scoreBoard.SubscribeToBall(_ball);
+        _scoreBoard.SubscribeToBall(_ball, _winScoreCondition);
         _ball.StartBall();
     }
 

@@ -15,6 +15,7 @@ public class ScoreBoard : MonoBehaviour
     [Tooltip("Description of the action to take when a player wins.")]
     [SerializeField] private string onWinActionDescription;
     public event Action OnWin;
+    private int _winScoreCondition;
 
     public void EnableScoreCanvas()
     {
@@ -40,14 +41,21 @@ public class ScoreBoard : MonoBehaviour
         }
     }
 
-    public void SubscribeToBall(Ball ball)
+    public void SubscribeToBall(Ball ball, int condition)
     {
+        if (condition <= 0)
+        {
+            Debug.LogError("Invalid win score condition: " + _winScoreCondition + ". Check Game Mode Controller inspector.");
+            return;
+        }
+
         _ball = ball;
         if (_ball != null)
         {
             _ball.OnScore += UpdateScore;
             UpdateScoreDisplay();
         }
+        _winScoreCondition = condition;
     }
 
     private void UpdateScoreDisplay()
@@ -58,22 +66,27 @@ public class ScoreBoard : MonoBehaviour
 
     private void UpdateScore(string side)
     {
-        if (side == _ball?.RightScoreTag)
+        if (_ball == null)
+        {
+            Debug.LogError("Ball is not assigned.");
+            return;
+        }
+
+        if (side == _ball.RightScoreTag)
         {
             _rightPlayerScore++;
         }
-        else if (side == _ball?.LeftScoreTag)
+        else if (side == _ball.LeftScoreTag)
         {
             _leftPlayerScore++;
         }
-
-        UpdateScoreDisplay();
-
-        if (_rightPlayerScore >= 3 || _leftPlayerScore >= 3)
+        if (Mathf.Abs(_leftPlayerScore - _rightPlayerScore) >= _winScoreCondition)
         {
             OnWin?.Invoke();
             ResetScore();
         }
+
+        UpdateScoreDisplay();
     }
 
     private void ResetScore()
